@@ -38,37 +38,40 @@ Point& CalculateCoordinates(string fileName) {
     int horizontal = 0;
     int depth = 0;
     std::string word;
-    std::list<int> horizontals;
-    std::list<int> verticals;
+    int aim = 0;
 
     while (ReadFile >> word) {
        if (word == "forward") {
             std::cout << word << " ";
             string direction;
             ReadFile >> direction;
-            std::cout << direction << endl;
-            verticals.push_back(std::stoi(direction));
+            std::cout << std::stoi(direction) << " ";
+            horizontal = horizontal + std::stoi(direction);
+            depth = depth + aim*std::stoi(direction);
+
+            std::cout << "horizontal: " << horizontal << " ";
+            std::cout << "depth " << depth << endl;
+
         }
         if (word == "up") {
             std::cout << word << " ";
             string direction;
             ReadFile >> direction;
-            std::cout << -1 * std::stoi(direction) << endl;
-            horizontals.push_back(-1 * std::stoi(direction));
+            std::cout << -1 * std::stoi(direction) << " ";
+            aim = aim -  std::stoi(direction);
+            std::cout << "aim: " << aim << endl;
         }
         if (word == "down") {
             std::cout << word << " ";
             string direction;
             ReadFile >> direction;
-            std::cout <<  direction << endl;
-            horizontals.push_back(std::stoi(direction));
+            std::cout <<  direction << " ";
+            aim += std::stoi(direction);
+            std::cout << "aim: " << aim << endl;
         }
     }
-    
-    horizontal  = std::accumulate(horizontals.begin(), horizontals.end(), 0);
-    std::cout <<  "H: " << horizontal << endl;
 
-    depth = std::accumulate(verticals.begin(), verticals.end(), 0);
+    std::cout <<  "H: " << horizontal << endl;
     std::cout <<  "D: " << depth << endl;
 
     Point* point = new Point(horizontal, depth);
